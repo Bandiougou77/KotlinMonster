@@ -1,5 +1,5 @@
 package org.example
-
+package monstre
 import java.io.File
 
 class EspeceMonstre (
@@ -30,3 +30,14 @@ class EspeceMonstre (
     }
 
 }
+
+
+
+class IndividuMonstre(
+    val espece: EspeceMonstre,
+    var vie: Int
+) {
+    val nom: String
+        get() = espece.nom
+}
+

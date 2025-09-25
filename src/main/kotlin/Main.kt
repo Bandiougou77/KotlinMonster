@@ -1,73 +1,134 @@
 package org.example
 
-import org.example.EspeceMonstre
+import dresseur.Entraineur
+import item.*
+import monstre.*
+import org.example.Combat.Combat
+import org.example.monstre.Capacite
 
+val combat: Any
+private val Entraineur.equipe: Any
 
-var joueur = Entraineur(1,"Sacha",100)
-var rival = Entraineur(2,"Regis",200)
-
-var especeAquamy = EspeceMonstre(1,nom="Aquamy",type="Meteo",10,11,9,14,14,55,9.0,10.0,
-    7.5,12.0,12.0,27.0,"Créature vaporeuse semblable à un nuage, produit des gouttes pures.",
-    "Fait baisser la température en s’endormant.","Calme, rêveur, mystérieux")
-var especeFlamkip = EspeceMonstre(4,nom="Flamkip",type="Animal",12,8,13,16,7,50,10.0,5.5,
-    9.5,9.5,6.5,22.0,"Petit animal entouré de flammes, déteste le froid.",
-    "Sa flamme change d’intensité selon son énergie.","Impulsif, joueur, loyal")
-var especeSpringleaf = EspeceMonstre (1,"Springleaf","Graine",9,
-    11, 10,12,13,60,
-    6.5,9.0,8.0,7.0,10.0,
-    34.0,"Petit monstre espiègle rond comme une graine, adore le soleil.",
-    "Sa feuille sur la tête indique son humeur.","Curieux, amical, timide"
-)
-fun changeCouleur(message: String, couleur:String=""): String {
+// Fonction utilitaire pour mettre de la couleur dans la console
+fun changeCouleur(message: String, couleur: String = ""): String {
     val reset = "\u001B[0m"
     val codeCouleur = when (couleur.lowercase()) {
         "rouge" -> "\u001B[31m"
         "vert" -> "\u001B[32m"
-        "jaune" -> "\u001B[33m"            // Pour les couleur chatgpt
+        "jaune" -> "\u001B[33m"
         "bleu" -> "\u001B[34m"
         "magenta" -> "\u001B[35m"
         "cyan" -> "\u001B[36m"
         "blanc" -> "\u001B[37m"
-           // rose clair
-
-        else -> " impossible " // pas de couleur si non reconnu
+        else -> "" // pas de couleur si non reconnu
     }
     return "$codeCouleur$message$reset"
 }
 
-
 fun main() {
-    println(changeCouleur("Hello","rouge"))
-    println(changeCouleur("World","bleu"))
-    println("Hello ${changeCouleur("my","jaune")} World")
-    println(changeCouleur("Truc","marron"))
-    println(changeCouleur("Pokemon","magenta"))
-    println(changeCouleur("Pikachu","jaune"))
-    println("pokemon ce nomme ${changeCouleur("Pikachu", "vert")} incroyable")
+    // === Test couleurs ===
+    println(changeCouleur("Hello", "rouge"))
+    println(changeCouleur("World", "bleu"))
+    println("Hello ${changeCouleur("my", "jaune")} World")
+    println(changeCouleur("Pokemon", "magenta"))
 
+    // === Création de dresseurs ===
+    val joueur = Entraineur(1, "Sacha", 100)
+    val rival = Entraineur(2, "Regis", 200)
 
-    println(" Dresseur : ${joueur.nom}")
-    println(" Argent : ${joueur.nom}")
-    println(" Dresseur : ${rival.nom}")
-    println(" Argent : ${rival.argent}")
-    joueur.argent+=50
-    println("Argent: ${joueur.argent}")
+    println("Dresseur : ${joueur.nom} | Argent : ${joueur.argent}")
+    println("Dresseur : ${rival.nom} | Argent : ${rival.argent}")
+
+    joueur.argent += 50
+    println("Après gain, argent de ${joueur.nom} : ${joueur.argent}")
+
     joueur.afficheDetail()
     rival.afficheDetail()
+
+    // === Création d’espèces de monstres ===
+    val especeAquamy = EspeceMonstre("Aquamy", 55)
+    val especeFlamkip = EspeceMonstre("Flamkip", 50)
+    val especeSpringleaf = EspeceMonstre("Springleaf", 60)
+
     println(especeAquamy.afficheArt())
     println(especeFlamkip.afficheArt())
     println(especeSpringleaf.afficheArt())
-//    println("${zonemonstre.nom} : ${zonemonstre.zoneSuivante?.nom}")
-//    route1.zoneSuivante = route2
-//    route2.zonePrecedente = route1
-//    val monstre1 = individuMonstre(1,"springleaf",especeSpringleaf,joueur,0.0)
-//    val monstre2 = individuMonstre(2, "flamkip",  especeFlamkip,joueur,0.0)
-//    val monstre3 = individuMonstre(3, "aquamy", especeAquamy,joueur,0.0)
-//    println("Monstre 1 : ${monstre1.nom} : ${monstre1.espece.nom} : ${monstre1.experience} :${monstre1.entraineur?.nom}")
-//    println("Monstre 2 : ${monstre2.nom} : ${monstre2.espece.nom}: ${monstre2.experience} : ${monstre2.entraineur?.nom}" )
-//    println("Monstre 3 : ${monstre3.nom} : ${monstre3.espece.nom}: ${monstre3.experience} : ${monstre3.entraineur?.nom}")
-//
+
+    // === Création d’un monstre et test d’items ===
+    val pikachu = EspeceMonstre("Pikachu", 35)
+    val monstre = IndividuMonstre(pikachu, 20)
+
+    val potion = Potion(1, "Potion", "Restaure 20 PV", 20)
+    val kube = MonsterKube(2, "Kube Basique", "Permet de capturer un monstre", 0.5)
+
+    joueur.ajouterItem(potion)
+    joueur.ajouterItem(kube)
+
+    joueur.utiliserItem(potion, monstre)
+    joueur.utiliserItem(kube, monstre)
+
+    // === Test ItemAntiStatut ===
+    monstre.statut = "Poison"
+    val antiPoison = ItemAntiStatut(3, "Anti-Poison", "Soigne l’empoisonnement", "Poison")
+    antiPoison.utiliser(monstre)
+
+    // === Test CT ===
+    val ctTonnerre = CT(4, "CT-Tonnerre", "Apprend l’attaque Tonnerre", "Tonnerre")
+    ctTonnerre.utiliser(monstre)
+    ctTonnerre.utiliser(monstre) // deuxième fois → déjà appris
+
+    // === Test Badge ===
+    val badgeRoche = Badge(1, "Badge Roche", "Premier badge obtenu à Argenta", joueur)
+    println("Nom du badge : ${badgeRoche.nom}")
+    println("Champion associé : ${badgeRoche.champion.nom}")
+}
+import dresseur.Entraineur
+import monstre.*
+import combat.Combat
+
+fun main() {
+    val sacha = Entraineur("Sacha")
+    val regis = Entraineur("Regis")
+
+    val pikachu = IndividuMonstre(EspeceMonstre("Pikachu", 35), 35)
+    val salameche = IndividuMonstre(EspeceMonstre("Salameche", 39), 39)
+
+    sacha.equipe.add(pikachu)
+    regis.equipe.add(salameche)
+
+    val combat = Combat(sacha, regis)
+    combat.lancer()
+}
+
+fun main() {
+    val sacha = Entraineur("Sacha")
+    val regis = Entraineur("Regis")
+
+    val pikachu = IndividuMonstre(EspeceMonstre("Pikachu", 35), 35)
+    val salameche = IndividuMonstre(EspeceMonstre("Salameche", 39), 39)
+
+    // Ajouter des capacités
+    val eclair = Capacite("Éclair", 10, 95)
+    val charge = Capacite("Charge", 8, 100)
+    val flammes = Capacite("Flammes", 12, 90)
+
+    pikachu.capacites.add(eclair)
+    pikachu.capacites.add(charge)
+    salameche.capacites.add(flammes)
+
+    sacha.equipe.add(pikachu)
+    regis.equipe.add(salameche)
+
+    class IndividuMonstre(
+        val espece: EspeceMonstre,
+        var vie: Int
+    ) {
+        val nom: String = espece.nom
+        val capacites: MutableList<Capacite> = mutableListOf()  // <- obligatoire
+    }
 
 
-
+    // Exemple d’utilisation
+    pikachu.utiliserCapacite(eclair, salameche)
+    salameche.utiliserCapacite(flammes, pikachu)
 }

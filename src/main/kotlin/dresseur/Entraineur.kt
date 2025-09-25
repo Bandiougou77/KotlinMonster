@@ -1,5 +1,7 @@
 package org.example
 
+import org.example.item.Badge
+
 class Entraineur {
     var id: Int = 0
     var nom: String = ""
@@ -8,8 +10,8 @@ class Entraineur {
         this.id = id
         this.nom = nom
         this.argent = argent
-        var equipeMonstre: MutableList<individuMonstre> = mutableListOf()
-        var boiteMonstre: MutableList<individuMonstre> = mutableListOf()
+        var equipeMonstre: MutableList<IndividuMonstre> = mutableListOf()
+        var boiteMonstre: MutableList<IndividuMonstre> = mutableListOf()
 
     }
     fun afficheDetail(){
@@ -17,5 +19,14 @@ class Entraineur {
         println("${this.nom}")
         println("${this.argent}")
     }
+}
+
+fun compterBadges(): Int {
+    val inventaire = null
+    return inventaire.filterIsInstance<Badge>().size
+}
+
+class Entraineur(val nom: String) {
+    val equipe: MutableList<IndividuMonstre> = mutableListOf()  // <- obligatoire
 }
 
