@@ -1,13 +1,13 @@
-package org.example.item
-
-import org.example.Entraineur
-
-
-
-class Badge (
+class Badge(
     id: Int,
     nom: String,
     description: String,
     var champion: Entraineur
-) : Item(id, nom, description) {
-}
+) : Item(id, nom, description)
+
+class Badge(
+    id: Int,
+    nom: String,
+    description: String,
+    var champion: Entraineur
+) : Item(id, nom, description)

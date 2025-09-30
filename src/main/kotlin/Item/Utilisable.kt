@@ -25,3 +25,6 @@ interface Utilisable {
     fun utiliser(cible: IndividuMonstre): Boolean
 }
 
+interface Utilisable {
+    fun utiliser(cible: IndividuMonstre): Boolean
+}

@@ -157,3 +157,13 @@ class IndividuMonstre(
     }
 }
 
+class IndividuMonstre(
+    val nom: String,
+    var pv: Int,
+    var attaque: Int,
+    var defense: Int
+) {
+    val capacites = mutableListOf<Capacite>()
+
+    fun estKO(): Boolean = pv <= 0
+}
