@@ -1,6 +1,6 @@
-package org.example
+package monstre
 
-import org.example.monstre.Capacite
+import dresseur.Entraineur
 import kotlin.random.Random
 import kotlin.math.round
 
@@ -114,7 +114,7 @@ class IndividuMonstre(
 
 }
 
-
+/**
 fun main() {
     val espece = EspeceMonstre(
         1, nom = "Aquamy", type = "Meteo", 10, 11, 9, 14, 14, 55, 9.0, 10.0,
@@ -136,34 +136,9 @@ fun main() {
 
     println("Niveau après gain d'expérience: ${monstre.niveau}")
 }
+*/
 
-package monstre
 
-class IndividuMonstre(
-    val espece: EspeceMonstre,
-    var vie: Int
-) {
-    val nom: String = espece.nom
-    val capacites: MutableList<Capacite> = mutableListOf()
 
-    fun utiliserCapacite(capacite: Capacite, cible: IndividuMonstre) {
-        val roll = (1..100).random()
-        if (roll <= capacite.precision) {
-            cible.vie -= capacite.puissance
-            println("$nom utilise ${capacite.nom} et inflige ${capacite.puissance} dégâts à ${cible.nom} (${cible.vie} PV restants)")
-        } else {
-            println("$nom utilise ${capacite.nom} mais rate sa cible !")
-        }
-    }
-}
 
-class IndividuMonstre(
-    val nom: String,
-    var pv: Int,
-    var attaque: Int,
-    var defense: Int
-) {
-    val capacites = mutableListOf<Capacite>()
 
-    fun estKO(): Boolean = pv <= 0
-}

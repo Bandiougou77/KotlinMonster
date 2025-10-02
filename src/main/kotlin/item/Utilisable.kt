@@ -1,7 +1,7 @@
-package org.example.item
+package item
 
 
-import org.example.IndividuMonstre
+import monstre.IndividuMonstre
 
 
 // <-- importe la classe IndividuMonstre
@@ -25,6 +25,4 @@ interface Utilisable {
     fun utiliser(cible: IndividuMonstre): Boolean
 }
 
-interface Utilisable {
-    fun utiliser(cible: IndividuMonstre): Boolean
-}
+

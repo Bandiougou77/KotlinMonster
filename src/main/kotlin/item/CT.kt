@@ -1,11 +1,9 @@
-package org.example.Item
+package item
 
-
-import monstre.IndividuMonstre
 
 /**
  * Représente une Capsule Technique qui enseigne une nouvelle attaque à un monstre.
- */
+
 class CT(
     id: Int,
     nom: String,
@@ -24,3 +22,4 @@ class CT(
         }
     }
 }
+*/

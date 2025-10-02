@@ -1,11 +1,11 @@
-package org.example.Item
-
-
-import monstre.IndividuMonstre
+package item
 
 /**
+import monstre.IndividuMonstre
+
+
  * Représente un objet qui enlève un statut négatif sur un monstre.
- */
+
 class ItemAntiStatut(
     id: Int,
     nom: String,
@@ -24,3 +24,4 @@ class ItemAntiStatut(
         }
     }
 }
+*/
